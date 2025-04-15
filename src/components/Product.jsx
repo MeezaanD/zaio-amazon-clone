@@ -1,16 +1,31 @@
 import React from "react";
 
-const Product = ({ title, image, price, description, rating }) => {
+const Product = ({ name, description, image, price }) => {
   return (
-    <div className="product">
-      <img src={image} alt={title} />
-      <h2>{title}</h2>
+    <div style={styles.card}>
+      <img src={image} alt={name} style={styles.image} />
+      <h3>{name}</h3>
       <p>{description}</p>
-      <p>${price}</p>
-      <p>Rating: {rating}</p>
-      <button>Add to Basket</button>
+      <h4>R{price}</h4>
     </div>
   );
+};
+
+const styles = {
+  card: {
+    border: "1px solid #ccc",
+    borderRadius: "10px",
+    padding: "15px",
+    width: "300px",
+    textAlign: "center",
+    backgroundColor: "#f9f9f9",
+  },
+  image: {
+    width: "100%",
+    height: "200px",
+    objectFit: "cover",
+    borderRadius: "10px",
+  },
 };
 
 export default Product;

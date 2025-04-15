@@ -1,12 +1,23 @@
 import React from "react";
+import { useCart } from "../context/CartContext";
 
-const Product = ({ name, description, image, price }) => {
+const Product = ({ id, name, description, image, price }) => {
+  const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+    const product = { id, name, description, image, price };
+    addToCart(product);
+  };
+
   return (
     <div style={styles.card}>
       <img src={image} alt={name} style={styles.image} />
       <h3>{name}</h3>
       <p>{description}</p>
       <h4>R{price}</h4>
+      <button onClick={handleAddToCart} style={styles.addButton}>
+        Add to Cart
+      </button>
     </div>
   );
 };
@@ -25,6 +36,15 @@ const styles = {
     height: "200px",
     objectFit: "cover",
     borderRadius: "10px",
+  },
+  addButton: {
+    backgroundColor: "#4CAF50",
+    color: "white",
+    padding: "10px",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    marginTop: "10px",
   },
 };
 

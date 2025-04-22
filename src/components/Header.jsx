@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import { FiMapPin, FiSearch, FiShoppingCart } from "react-icons/fi";
+import amazonLogo from "../assets/amazon_logo.png";
 import "../styles/header.css";
 
 const Header = () => {
@@ -20,7 +21,7 @@ const Header = () => {
     <header className="header">
       <div className="header_left">
         <Link to="/" className="header_logo">
-          <img src="/src/assets/amazon_logo.png" alt="Amazon Logo" />
+          <img src={amazonLogo} alt="Amazon Logo" />
           <span>.co.za</span>
         </Link>
         <div className="header_location">

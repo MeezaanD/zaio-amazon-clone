@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { auth } from "../services/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
-import "../styles/Login.css";
 import amazonLogo from "../assets/amazon-dark-text.jpg";
+import "../styles/Login.css";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");

@@ -1,5 +1,6 @@
 import React from "react";
 import { useCart } from "../context/CartContext";
+import { Link } from "react-router-dom";
 
 const Product = ({ id, name, description, image, price }) => {
   const { addToCart } = useCart();
@@ -11,10 +12,12 @@ const Product = ({ id, name, description, image, price }) => {
 
   return (
     <div style={styles.card}>
-      <img src={image} alt={name} style={styles.image} />
-      <h3>{name}</h3>
-      <p>{description}</p>
-      <h4>R{price}</h4>
+      <Link to={`/product/${id}`} style={styles.link}>
+        <img src={image} alt={name} style={styles.image} />
+        <h3>{name}</h3>
+        <p>{description}</p>
+        <h4>R{price}</h4>
+      </Link>
       <button onClick={handleAddToCart} style={styles.addButton}>
         Add to Cart
       </button>
@@ -45,6 +48,10 @@ const styles = {
     borderRadius: "5px",
     cursor: "pointer",
     marginTop: "10px",
+  },
+  link: {
+    textDecoration: "none",
+    color: "inherit",
   },
 };
 

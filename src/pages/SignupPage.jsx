@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { auth } from "../services/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import "../styles/Signup.css";
-import amazonLogo from "/src/assets/amazon-dark-text.jpg";
 import { Link } from "react-router-dom";
+import amazonLogo from "/src/assets/amazon-dark-text.jpg";
+import "../styles/Signup.css";
 
 const SignupPage = () => {
   const [email, setEmail] = useState("");

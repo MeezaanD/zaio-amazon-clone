@@ -3,9 +3,9 @@ import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import { db } from "../services/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import CheckoutProduct from "../components/CheckoutProduct";
 import { Elements } from "@stripe/react-stripe-js";
 import { stripePromise } from "../services/stripe";
+import CheckoutProduct from "../components/CheckoutProduct";
 import PaymentForm from "../components/PaymentForm";
 
 const CheckoutPage = () => {

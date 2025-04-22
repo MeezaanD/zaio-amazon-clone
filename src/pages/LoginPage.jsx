@@ -7,7 +7,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate(); // Hook for navigating to different routes
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -16,18 +16,12 @@ const LoginPage = () => {
       return;
     }
     try {
-      // Sign in the user with email and password
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-
-      // Get the user's token
       const token = await userCredential.user.getIdToken();
 
-      // Store the token in sessionStorage (or localStorage)
       sessionStorage.setItem("sessionToken", token);
 
-      // Redirect to the home page
       navigate("/");
-
       alert("Login successful!");
     } catch (err) {
       setError(err.message);

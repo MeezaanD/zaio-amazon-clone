@@ -64,7 +64,7 @@ const ProductPage = () => {
     <>
       <Header />
       <div className="product-page">
-        <div className="product-details">
+        <div className="single-product-details">
           <div
             className="product-image"
             onMouseMove={handleMouseMove}

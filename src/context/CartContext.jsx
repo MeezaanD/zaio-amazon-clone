@@ -9,7 +9,6 @@ export const CartProvider = ({ children }) => {
     return storedCart ? JSON.parse(storedCart) : [];
   });
 
-  // Save cart data to localStorage whenever the cart is updated
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
@@ -37,7 +36,6 @@ export const CartProvider = ({ children }) => {
     );
   };
 
-  // Remove item from cart
   const removeFromCart = (id) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== id));
   };
@@ -49,7 +47,7 @@ export const CartProvider = ({ children }) => {
 
   const calculateTotal = () => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);
-  };
+  };  
 
   return (
     <CartContext.Provider

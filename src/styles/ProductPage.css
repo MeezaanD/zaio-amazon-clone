@@ -7,7 +7,7 @@
   min-height: 100vh;
 }
 
-.product-details {
+.single-product-details {
   display: flex;
   flex-direction: row;
   background-color: white;
@@ -118,7 +118,7 @@
 /* MEDIA QUERY */
 
 @media (max-width: 1024px) {
-  .product-details {
+  .single-product-details {
     flex-direction: column;
     align-items: center;
   }

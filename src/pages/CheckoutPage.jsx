@@ -1,16 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import { db } from "../services/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { Elements } from "@stripe/react-stripe-js";
 import { stripePromise } from "../services/stripe";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 import CheckoutProduct from "../components/CheckoutProduct";
 import PaymentForm from "../components/PaymentForm";
+import "../styles/CheckoutPage.css";
 
 const CheckoutPage = () => {
   const { cart, calculateTotal, clearCart } = useCart();
   const { user } = useAuth();
+  const [selectedItems, setSelectedItems] = useState(cart.map(() => true));
 
   const handlePlaceOrder = async () => {
     if (!user) {
@@ -21,7 +25,7 @@ const CheckoutPage = () => {
     try {
       await addDoc(collection(db, "orders"), {
         userId: user.uid,
-        items: cart,
+        items: cart.filter((_, index) => selectedItems[index]),
         total: calculateTotal(),
         createdAt: serverTimestamp(),
       });
@@ -34,21 +38,58 @@ const CheckoutPage = () => {
     }
   };
 
-  if (cart.length === 0) return <p>Your cart is empty.</p>;
+  const handleSelectionChange = (index) => {
+    const updatedSelection = [...selectedItems];
+    updatedSelection[index] = !updatedSelection[index];
+    setSelectedItems(updatedSelection);
+  };
+
+  const calculateSelectedTotal = () => {
+    return cart
+      .filter((_, index) => selectedItems[index])
+      .reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+
 
   return (
-    <div>
-      <h2>Checkout</h2>
-      {cart.map((item) => (
-        <CheckoutProduct key={item.id} {...item} />
-      ))}
-      <h3>Total: R{calculateTotal().toFixed(2)}</h3>
-      <button onClick={handlePlaceOrder}>Place Order (No Payment)</button>
+    <>
+      <Header />
+      <div className="checkout-container">
+        <h2>Shopping Cart</h2>
+        <div className="checkout-content">
+          <div className="product-table">
+            <table>
+              <tbody>
+                {cart.length === 0 ? (
+                  <tr>
+                    <td colSpan="3" className="empty-cart-message">
+                      Your cart is empty.
+                    </td>
+                  </tr>
+                ) : (
+                  cart.map((item, index) => (
+                    <CheckoutProduct
+                      key={item.id}
+                      {...item}
+                      onSelectChange={() => handleSelectionChange(index)}
+                    />
+                  ))
+                )}
+              </tbody>
+            </table>
 
-      <Elements stripe={stripePromise}>
-        <PaymentForm />
-      </Elements>
-    </div>
+            <h3 className="grandTotal">Total: R{calculateSelectedTotal().toFixed(2)}</h3>
+          </div>
+
+          <div>
+            <Elements stripe={stripePromise}>
+              <PaymentForm />
+            </Elements>
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </>
   );
 };
 

@@ -8,23 +8,49 @@ import {
 } from "@stripe/react-stripe-js";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
 import { db } from "../services/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import "../styles/PaymentForm.css";
 
 const PaymentForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const { cart, calculateTotal, clearCart } = useCart();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!user) {
+      alert("You need to be logged in to make a payment.");
+      navigate("/login");
+      return;
+    }
+
     if (!stripe || !elements) return;
 
-    setLoading(true);
-
     const cardNumberElement = elements.getElement(CardNumberElement);
+    const cardExpiryElement = elements.getElement(CardExpiryElement);
+    const cardCvcElement = elements.getElement(CardCvcElement);
+
+    if (!cardNumberElement || !cardExpiryElement || !cardCvcElement) {
+      alert("Please complete all required payment fields.");
+      return;
+    }
+
+    const numberComplete = cardNumberElement._complete;
+    const expiryComplete = cardExpiryElement._complete;
+    const cvcComplete = cardCvcElement._complete;
+
+    if (!numberComplete || !expiryComplete || !cvcComplete) {
+      alert("Please complete all required fields.");
+      return;
+    }
+
+    setLoading(true);
 
     try {
       const { error, token } = await stripe.createToken(cardNumberElement);
@@ -36,8 +62,8 @@ const PaymentForm = () => {
         return;
       }
 
-      // Save order to Firestore
       await addDoc(collection(db, "orders"), {
+        userId: user.uid,
         items: cart,
         total: calculateTotal(),
         createdAt: serverTimestamp(),
@@ -54,36 +80,7 @@ const PaymentForm = () => {
     }
   };
 
-  return (
-    <form onSubmit={handleSubmit} style={styles.form}>
-      <h2>Payment Details</h2>
-
-      <label>Card Number</label>
-      <CardNumberElement options={styles.cardElement} style={styles.input} />
-
-      <label>Expiry Date</label>
-      <CardExpiryElement options={styles.cardElement} style={styles.input} />
-
-      <label>CVV</label>
-      <CardCvcElement options={styles.cardElement} style={styles.input} />
-
-      <button type="submit" disabled={!stripe || loading} style={styles.button}>
-        {loading ? "Processing..." : "Pay R" + calculateTotal()}
-      </button>
-    </form>
-  );
-};
-
-const styles = {
-  form: {
-    maxWidth: "400px",
-    margin: "auto",
-    padding: "20px",
-    border: "1px solid #ccc",
-    borderRadius: "10px",
-    backgroundColor: "#f9f9f9",
-  },
-  cardElement: {
+  const cardElementStyle = {
     style: {
       base: {
         fontSize: "16px",
@@ -92,23 +89,36 @@ const styles = {
       },
       invalid: { color: "#fa755a" },
     },
-  },
-  input: {
-    padding: "10px",
-    marginBottom: "15px",
-    width: "100%",
-    display: "block",
-  },
-  button: {
-    width: "100%",
-    padding: "12px",
-    backgroundColor: "#5C67F2",
-    color: "#fff",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-    fontWeight: "bold",
-  },
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="payment-form">
+      <h2>Payment Details</h2>
+
+      <label>Card Number</label>
+      <div className="payment-input-wrapper">
+        <CardNumberElement options={cardElementStyle} />
+      </div>
+
+      <label>Expiry Date</label>
+      <div className="payment-input-wrapper">
+        <CardExpiryElement options={cardElementStyle} />
+      </div>
+
+      <label>CVV</label>
+      <div className="payment-input-wrapper">
+        <CardCvcElement options={cardElementStyle} />
+      </div>
+
+      <button
+        type="submit"
+        disabled={!stripe || loading}
+        className="payment-submit-btn"
+      >
+        {loading ? "Processing..." : `Pay R${calculateTotal().toFixed(2)}`}
+      </button>
+    </form>
+  );
 };
 
 export default PaymentForm;

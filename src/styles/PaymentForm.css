@@ -1,0 +1,51 @@
+.payment-form {
+    max-width: 400px;
+    width: 100%;
+    margin: auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+  
+  .payment-form h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #333;
+  }
+  
+  .payment-form label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+    color: #555;
+  }
+  
+  .payment-input-wrapper {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f7f7f7;
+    margin-bottom: 1rem;
+  }
+  
+  .payment-submit-btn {
+    width: 100%;
+    padding: 14px;
+    margin-top: 1.5rem;
+    background-color: #ffd814;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background 0.3s ease;
+  }
+  
+  .payment-submit-btn:disabled {
+    background-color: #a0a5f7;
+    cursor: not-allowed;
+  }
+  

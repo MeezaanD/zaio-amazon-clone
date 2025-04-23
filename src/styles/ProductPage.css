@@ -1,81 +1,187 @@
 .product-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    background-color: #f7f7f7;
-    min-height: 100vh;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: #f7f7f7;
+  min-height: 100vh;
+}
+
+.product-details {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  max-width: 1200px;
+  width: 100%;
+  position: relative;
+}
+
+.product-image {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f1f1f1;
+  position: relative;
+}
+
+.product-image img {
+  max-width: 100%;
+  max-height: 500px;
+  object-fit: contain;
+  display: block;
+}
+
+.zoom-lens {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border: 2px solid #999;
+  background-color: rgba(255, 255, 255, 0.4);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.zoom-window {
+  position: absolute;
+  top: 0;
+  left: calc(100% + 20px);
+  width: 400px;
+  height: 400px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  z-index: 1;
+  display: block;
+}
+
+.zoom-window img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+}
+
+.product-info {
+  flex: 1.5;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.product-info h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.product-info p {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.product-info h4 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.product-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.add-to-cart-btn {
+  background-color: #ffd814;
+  color: black;
+  padding: 15px;
+  width: 200px;
+  border: none;
+  font-size: 1.1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #e68900;
+}
+
+/* MEDIA QUERY */
+
+@media (max-width: 1024px) {
   .product-details {
-    display: flex;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    max-width: 1200px;
-    width: 100%;
-  }
-  
-  .product-image {
-    flex: 1;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    background-color: #f1f1f1;
   }
-  
-  .product-image img {
-    max-width: 100%;
-    max-height: 500px;
-    object-fit: contain;
+
+  .zoom-window {
+    display: none;
   }
-  
-  .product-info {
-    flex: 1.5;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
+
   .product-info h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 10px;
+    font-size: 2rem;
   }
-  
-  .product-info p {
-    font-size: 1.1rem;
-    color: #555;
-    margin-bottom: 20px;
-  }
-  
+
   .product-info h4 {
-    font-size: 1.8rem;
-    font-weight: bold;
-    margin-bottom: 20px;
+    font-size: 1.5rem;
   }
-  
-  .product-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+}
+
+@media (max-width: 768px) {
+  .product-page {
+    padding: 10px;
   }
-  
-  .add-to-cart-btn {
-    background-color: #ff9900;
-    color: white;
+
+  .product-image img {
+    max-height: 300px;
+  }
+
+  .product-info {
     padding: 15px;
-    border: none;
-    font-size: 1.1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s;
   }
-  
-  .add-to-cart-btn:hover {
-    background-color: #e68900;
+
+  .product-info h1 {
+    font-size: 1.6rem;
   }
-  
+
+  .product-info p {
+    font-size: 1rem;
+  }
+
+  .add-to-cart-btn {
+    font-size: 1rem;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-page {
+    text-align: center;
+  }
+  .product-info h1 {
+    font-size: 1.4rem;
+  }
+
+  .product-info h4 {
+    font-size: 1.2rem;
+  }
+
+  .product-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .add-to-cart-btn {
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+}

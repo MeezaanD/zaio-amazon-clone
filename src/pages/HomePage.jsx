@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Product from "../components/Product";
 import { fetchProducts } from "../services/productService";
+import "../styles/HomePage.css";
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
@@ -30,24 +31,18 @@ const HomePage = () => {
   return (
     <>
       <Header />
-      <div className="home-page" style={styles.container}>
-        {products.map((product) => (
-          <Product key={product.id} {...product} />
-        ))}
+      <div className="home-wrapper">
+        <h2 className="home-heading">Today's Deals</h2>
+        <div className="product-grid">
+          {products.map((product) => (
+            <Product key={product.id} {...product} />
+          ))}
+        </div>
+        <div className="home-footer-space" />
       </div>
       <Footer />
     </>
   );
-};
-
-const styles = {
-  container: {
-    display: "flex",
-    flexWrap: "wrap",
-    gap: "20px",
-    justifyContent: "center",
-    padding: "20px",
-  },
 };
 
 export default HomePage;

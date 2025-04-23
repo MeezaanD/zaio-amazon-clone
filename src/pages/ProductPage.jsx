@@ -66,7 +66,7 @@ const ProductPage = () => {
       <div className="product-page">
         <div className="single-product-details">
           <div
-            className="product-image"
+            className="single-product-image"
             onMouseMove={handleMouseMove}
             onMouseEnter={() => setShowZoom(true)}
             onMouseLeave={() => setShowZoom(false)}

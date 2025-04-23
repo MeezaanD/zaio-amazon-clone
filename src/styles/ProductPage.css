@@ -19,19 +19,18 @@
   position: relative;
 }
 
-.product-image {
+.single-product-image {
   flex: 1;
   padding: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f1f1f1;
+  background-color: white;
   position: relative;
 }
 
-.product-image img {
+.single-product-image img {
   max-width: 100%;
-  max-height: 500px;
   object-fit: contain;
   display: block;
 }
@@ -141,7 +140,7 @@
     padding: 10px;
   }
 
-  .product-image img {
+  .single-product-image img {
     max-height: 300px;
   }
 

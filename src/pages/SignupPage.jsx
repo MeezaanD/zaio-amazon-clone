@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { auth } from "../services/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import amazonLogo from "/src/assets/amazon-dark-text.jpg";
 import "../styles/Signup.css";
 
@@ -10,26 +10,25 @@ const SignupPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
     setError("");
+
     if (!email || !password || !confirmPassword) {
       setError("All fields are required.");
       return;
     }
+
     if (password !== confirmPassword) {
       setError("Passwords do not match.");
       return;
     }
+
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      setSuccessMessage("Signup successful!");
-      setTimeout(() => {
-        setSuccessMessage("");
-        navigate("/");
-      }, 3000);
+      navigate("/");
     } catch (err) {
       setError(err.message);
     }
@@ -42,7 +41,6 @@ const SignupPage = () => {
       <div className="signup-form-container">
         <h1>Create account</h1>
 
-        {successMessage && <div className="alert-success">{successMessage}</div>}
         {error && <p style={{ color: "red" }}>{error}</p>}
 
         <form onSubmit={handleSignup}>

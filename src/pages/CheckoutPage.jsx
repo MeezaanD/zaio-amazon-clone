@@ -50,6 +50,7 @@ const CheckoutPage = () => {
       .reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
+  const selectedItemCount = selectedItems.filter(Boolean).length;
 
   return (
     <>
@@ -78,7 +79,11 @@ const CheckoutPage = () => {
               </tbody>
             </table>
 
-            <h3 className="grandTotal">Total: R{calculateSelectedTotal().toFixed(2)}</h3>
+            <h3 className="grandTotal">
+              Subtotal ({selectedItemCount} {selectedItemCount === 1 ? "item" : "items"}): R
+              {calculateSelectedTotal().toFixed(2)}
+            </h3>
+
           </div>
 
           <div>

@@ -52,63 +52,61 @@ const ProductPage = () => {
     setLensPosition({ x, y });
   };
 
-  if (loading) {
-    return <p>Loading product...</p>;
-  }
-
-  if (error) {
-    return <p>{error}</p>;
-  }
-
   return (
     <>
       <Header />
       <div className="product-page">
-        <div className="single-product-details">
-          <div
-            className="single-product-image"
-            onMouseMove={handleMouseMove}
-            onMouseEnter={() => setShowZoom(true)}
-            onMouseLeave={() => setShowZoom(false)}
-          >
-            <img ref={imageRef} src={product.image} alt={product.name} />
+        {loading ? (
+          <div className="loading-message">Loading product...</div>
+        ) : error ? (
+          <div className="error-message">{error}</div>
+        ) : (
+          <div className="single-product-details">
+            <div
+              className="single-product-image"
+              onMouseMove={handleMouseMove}
+              onMouseEnter={() => setShowZoom(true)}
+              onMouseLeave={() => setShowZoom(false)}
+            >
+              <img ref={imageRef} src={product.image} alt={product.name} />
 
-            {showZoom && (
-              <>
-                <div
-                  className="zoom-lens"
-                  style={{
-                    top: lensPosition.y - 50,
-                    left: lensPosition.x - 50,
-                  }}
-                ></div>
-
-                <div className="zoom-window">
-                  <img
-                    src={product.image}
-                    alt="Zoom"
+              {showZoom && (
+                <>
+                  <div
+                    className="zoom-lens"
                     style={{
-                      transform: `translate(-${lensPosition.x * zoomSize}px, -${lensPosition.y * zoomSize}px) scale(${zoomSize})`,
-                      transformOrigin: "top left",
+                      top: lensPosition.y - 50,
+                      left: lensPosition.x - 50,
                     }}
-                  />
-                </div>
-              </>
-            )}
-          </div>
+                  ></div>
 
-          <div className="product-info">
-            <h1>{product.name}</h1>
-            <p>{product.description}</p>
-            <h4>R{product.price}</h4>
+                  <div className="zoom-window">
+                    <img
+                      src={product.image}
+                      alt="Zoom"
+                      style={{
+                        transform: `translate(-${lensPosition.x * zoomSize}px, -${lensPosition.y * zoomSize}px) scale(${zoomSize})`,
+                        transformOrigin: "top left",
+                      }}
+                    />
+                  </div>
+                </>
+              )}
+            </div>
 
-            <div className="product-actions">
-              <button onClick={handleAddToCart} className="add-to-cart-btn">
-                Add to Cart
-              </button>
+            <div className="product-info">
+              <h1>{product.name}</h1>
+              <p>{product.description}</p>
+              <h4>R{product.price}</h4>
+
+              <div className="product-actions">
+                <button onClick={handleAddToCart} className="add-to-cart-btn">
+                  Add to Cart
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
       <Footer />
     </>

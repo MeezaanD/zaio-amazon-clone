@@ -24,21 +24,22 @@ const HomePage = () => {
     loadProducts();
   }, []);
 
-  if (loading) {
-    return <p>Loading products...</p>;
-  }
-
   return (
     <>
       <Header />
       <div className="home-wrapper">
-        <h2 className="home-heading">Today's Deals</h2>
-        <div className="product-grid">
-          {products.map((product) => (
-            <Product key={product.id} {...product} />
-          ))}
+        <div className="home-banner">
+          <h2 className="home-heading">Today's Deals</h2>
+          <div className="product-grid">
+            {loading ? (
+              <div className="loading-message">Loading products...</div>
+            ) : (
+              products.map((product) => (
+                <Product key={product.id} {...product} />
+              ))
+            )}
+          </div>
         </div>
-        <div className="home-footer-space" />
       </div>
       <Footer />
     </>

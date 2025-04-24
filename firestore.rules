@@ -1,0 +1,16 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Public read access to products
+    match /products/{productId} {
+      allow read: if true;
+    }
+
+    // Orders collection - users can write and read their own orders
+    match /orders/{orderId} {
+      allow create: if request.auth != null;
+      allow read: if request.auth != null && request.auth.uid == resource.data.userId;
+    }
+  }
+}
